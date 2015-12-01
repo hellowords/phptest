@@ -26,10 +26,14 @@ class Check extends Discover{
     function say($a){
         parent::say();
         $this->girl=$a;
-        echo "$this->girl<br>";
+        echo "$this->girl"."<br>";
     }
     function __toString(){
-        return "tostring<br>";
+        return "tostring"."<br>";
+    }
+    function __clone(){
+        $this->name="clone";
+        echo "clone";
     }
 }
 $n=new Check("n","",9090);
@@ -38,3 +42,5 @@ $n->say("lulu");
 $m->make("cdn",6969);
 echo DIscover::HOST;
 echo $n;
+$p=clone $m;
+$p->say("nihao");
