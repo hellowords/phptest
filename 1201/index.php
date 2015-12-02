@@ -18,6 +18,9 @@
             }
             $form=new Form;
             echo $form;            
+						if(isset($_POST["sub"])){
+							echo	new Jisuan();
+						}
         ?>
 	</body>
 </html>
