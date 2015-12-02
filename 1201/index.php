@@ -11,8 +11,13 @@
 		<a href="index.php?action=yuan">圆</a>
 		<hr>
 		</center>
-		<?php
-
-		?>
+        <?php
+            error_reporting(E_ALL & ~E_NOTICE);//设置错误报告级别
+            function __autoload($className){
+                include strtolower($className).".class.php";
+            }
+            $form=new Form;
+            echo $form;            
+        ?>
 	</body>
 </html>
