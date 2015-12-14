@@ -6,10 +6,15 @@
 		private $filepath;
 		private $allowtype=array('gif','jpg','png','php');
 		private $maxsize=6666666;
-		private $randname=true;
+        private $randname=true;
+        private $originname; //源文件名
+        private $tmpname;   //临时文件名
+        private $filetype;  //文件类型
+        private $filesize; //文件大小
+        private $errornum; //错误代号
 		function __construct($option=array()){
 			foreach($option as $key=>$val){
-				$key=strtolower($key);
+				$key=strtolower($key); //检测大小写
 				// 查看用户参数中数组的下表是否和成员属性名相同
 				if(!in_array($key,get_class_vars(get_class($this)))){
 					continue;
@@ -20,8 +25,32 @@
 		// 用来给用户都提供的变量参数赋值
 		private function SetOption($key,$val){
 			$this->$key=$val;
-		}
-		private function CheckFilePath(){
+        }
+        private function GetError(){
+            $str="上传文件{$this->originname}错误！";
+            switch($this->errornum){
+            case 4:
+                $str.="没有文件被上传";
+                break;
+            case 3:
+                $str.="文件没成功";
+                break;
+            case 2:
+                $str.="文件超过了HTML表单！";
+                break;
+            case 1:
+                $str.="上传文件超过了PHP.ini";
+                break;
+            default :
+                $str.='未知错误';
+}
+}
+        private function CheckFilePath(){
+            if(empty($this->filepath)){
+                $this->SetOption('errornum',
+                continue;
+
+}
 		}
 		private function CheckFileType(){
 		}
@@ -30,9 +59,29 @@
 		private function SetFileName(){
 		}
 		// 用来上传一个文件
-		function uploadFile(){
-		}
-		//用于获取上传文件后的
+        private function uploadFile($fileFiled){
+            //检查文件路径
+            if(!$this->)
+            $name=$_FILES[$fileFiled]['name'];
+            $tmp_name=$_FILES[$fileFiled]['tmp_name'];
+            $size=$_FILES[$fileFiled]['size'];
+            $error=$_FILES[$fileFiled]['error'];
+            $this->SetFiles($name,$tmp_name,$size,$error);
+        }
+        // 设置和$_FILES 有关的内容
+        private function SetFiles($name='',$tmp_name='',$size=0,$error=0){
+            $this->SetOption('errornum',$error);
+            if($error){
+                return false;
+            }
+           // $arrStr=explode('.',$name);
+           // $this->SetOption('filetype',strtolower($arrStr[count($arrStr)-1]));
+            $this->SetOption('originname',$name);
+            $this->SetOption('tmpname',$tmp_name);
+            $this->SetOption('filesize',$size);
+            return true;
+        }
+		//用于获取上传文件后的名称
 		function GetFileName(){
 		}
 		function GetErrorMsg(){
